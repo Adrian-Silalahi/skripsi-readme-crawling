@@ -1,48 +1,44 @@
-# Panduan Scraping Komentar TikTok Menggunakan Ekstensi Chrome "TTCommentExporter"
+# Dokumentasi Proses Scraping Komentar TikTok Menggunakan Ekstensi Chrome "TTCommentExporter"
 
-Dokumentasi ini menjelaskan cara melakukan scraping (pengambilan data) komentar dari video TikTok menggunakan ekstensi Google Chrome bernama "TTCommentExporter - Export TikTok Comments". Metode ini cocok untuk mengambil komentar dari video-video spesifik yang ditemukan, misalnya, melalui pencarian kata kunci tertentu.
+Catatan ini mendokumentasikan langkah-langkah yang dilakukan untuk scraping (pengambilan data) komentar dari video TikTok menggunakan ekstensi Google Chrome "TTCommentExporter - Export TikTok Comments". Video target dalam proses ini ditemukan menggunakan kata kunci `#chatgpt`.
 
-**Tujuan:** Mendapatkan daftar komentar (dan balasan, jika diinginkan) dari video TikTok tertentu (yang dalam kasus ini ditemukan menggunakan kata kunci `#chatgpt`) dan menyimpannya dalam format file CSV.
+**Tujuan Proses:** Mendapatkan daftar komentar (dan balasan, sesuai pilihan) dari video TikTok spesifik yang relevan dengan `#chatgpt` dan menyimpannya dalam format file CSV.
 
-**Prasyarat:**
-*   Browser Google Chrome terpasang di komputer Anda.
+**Alat yang Digunakan:**
+*   Browser Google Chrome.
+*   Ekstensi Chrome "TTCommentExporter - Export TikTok Comments".
 *   Koneksi internet.
 
-## Langkah-langkah Rinci:
+## Tahapan Proses yang Dilakukan:
 
-1.  **Instal Ekstensi TTCommentExporter:**
-    *   Buka browser Google Chrome.
-    *   Kunjungi halaman ekstensi di Chrome Web Store melalui tautan berikut:
+1.  **Instalasi Ekstensi TTCommentExporter:**
+    *   Ekstensi "TTCommentExporter - Export TikTok Comments" diinstal ke browser Google Chrome dari Chrome Web Store melalui tautan:
         [https://chromewebstore.google.com/detail/ttcommentexporter-export/epjbmmchkjlgmogfoamcleeikmfaffjm](https://chromewebstore.google.com/detail/ttcommentexporter-export/epjbmmchkjlgmogfoamcleeikmfaffjm)
-    *   Klik tombol **"Add to Chrome"** (atau "Tambahkan ke Chrome").
-    *   Jika muncul pop-up konfirmasi, klik **"Add extension"** (Tambahkan ekstensi). Tunggu hingga proses instalasi selesai.
+    *   Instalasi diselesaikan dengan memilih opsi "Tambahkan ke Chrome" dan mengonfirmasi penambahan ekstensi.
 
-2.  **Cari dan Buka Video TikTok, lalu Aktifkan Ekstensi:**
-    *   **Cari Video:** Gunakan fitur pencarian di TikTok (baik di aplikasi mobile atau web) untuk menemukan video yang relevan dengan topik Anda. **Dalam contoh ini, video target ditemukan dengan mencari menggunakan kata kunci atau tagar `#chatgpt`**.
-    *   **Buka Video:** Setelah menemukan video yang diinginkan dari hasil pencarian `#chatgpt`, buka halaman spesifik video tersebut di tab baru Google Chrome. Pastikan video dan bagian komentarnya mulai termuat.
-    *   **Aktifkan Ekstensi:** Setelah halaman video TikTok terbuka penuh, klik ikon **Ekstensi** (biasanya berbentuk potongan puzzle) di pojok kanan atas toolbar Chrome.
-    *   Dari daftar ekstensi yang muncul, klik **"TTCommentExporter - Export TikTok Comments"**.
+2.  **Pencarian Video Target dan Aktivasi Ekstensi:**
+    *   **Pencarian Video:** Fitur pencarian TikTok digunakan untuk mencari video yang relevan dengan kata kunci `#chatgpt`.
+    *   **Pembukaan Video:** Video spesifik yang diinginkan dari hasil pencarian `#chatgpt` dibuka pada tab baru di Google Chrome. Halaman dimuat hingga bagian komentar terlihat.
+    *   **Aktivasi Ekstensi:** Ikon Ekstensi (puzzle) di toolbar Chrome diklik, lalu "TTCommentExporter - Export TikTok Comments" dipilih dari daftar untuk diaktifkan pada halaman video tersebut.
 
-3.  **Konfigurasi dan Mulai Ekspor:**
-    *   Sebuah kotak dialog (pop-up) dari ekstensi TTCommentExporter akan muncul.
-    *   Link video TikTok yang sedang Anda buka seharusnya sudah otomatis terisi di dalam kotak teks.
-    *   Anda akan melihat opsi **"Include comment replies"** (Sertakan balasan komentar). Centang kotak ini jika Anda ingin mengambil balasan dari setiap komentar utama. Biarkan tidak dicentang jika Anda hanya menginginkan komentar utama.
-    *   Klik tombol **"Export →"**.
+3.  **Konfigurasi dan Memulai Ekspor:**
+    *   Kotak dialog ekstensi TTCommentExporter muncul, secara otomatis menampilkan link video yang sedang terbuka.
+    *   Opsi **"Include comment replies"** diperiksa dan dicentang jika balasan komentar diperlukan untuk disertakan dalam data.
+    *   Proses ekspor dimulai dengan menekan tombol **"Export →"**.
 
-4.  **Tunggu Proses Ekspor Selesai:**
-    *   Ekstensi akan mulai mengambil data komentar dari video tersebut. Kotak dialog ekstensi akan menampilkan status **"Exporting..."** dan jumlah komentar yang sudah diproses.
-    *   Harap tunggu hingga proses ini selesai. Waktu yang dibutuhkan tergantung pada jumlah komentar pada video tersebut. Jangan menutup tab video TikTok atau kotak dialog ekstensi selama proses ini berlangsung.
+4.  **Menunggu Penyelesaian Proses Ekspor:**
+    *   Ekstensi memulai proses pengambilan data komentar, dengan status **"Exporting..."** dan jumlah komentar terproses terlihat pada kotak dialog.
+    *   Proses ini ditunggu hingga selesai. Tab video TikTok dan kotak dialog ekstensi dibiarkan terbuka selama proses berlangsung.
 
-5.  **Unduh Hasil Komentar:**
-    *   Setelah proses ekspor selesai, tombol **"Download (...) Comments and Replies"** (atau serupa, menampilkan jumlah komentar yang berhasil diekspor) akan aktif di kotak dialog ekstensi.
-    *   Klik tombol **"Download"** tersebut.
-    *   **Catatan Penting:** Seperti yang terlihat pada gambar, versi gratis dari ekstensi ini mungkin memiliki batasan jumlah komentar yang bisa diekspor (misalnya, hingga 225 komentar). Untuk mengekspor lebih banyak, Anda mungkin perlu meng-upgrade ke versi berbayar dari ekstensi tersebut.
+5.  **Pengunduhan Hasil Komentar:**
+    *   Setelah proses ekspor selesai, tombol **"Download (...) Comments and Replies"** (menampilkan jumlah data yang diekspor) menjadi aktif pada kotak dialog ekstensi.
+    *   Tombol **"Download"** tersebut diklik untuk mengunduh file hasil.
+    *   **Catatan:** Berdasarkan pengamatan, versi gratis ekstensi ini memiliki batasan jumlah komentar yang dapat diekspor (misalnya, hingga 225 komentar). Untuk jumlah lebih besar, diperlukan upgrade ke versi berbayar.
 
-6.  **Hasil Disimpan dalam File CSV:**
-    *   Browser Anda akan secara otomatis mengunduh file berformat `.csv`. Nama filenya biasanya akan mencakup ID video TikTok dan jumlah komentar (contoh: `TTCommentExporter-7479507366552030469-205-comments-replies.csv`).
-    *   File CSV ini berisi data komentar yang berhasil di-scrape (seperti ID Komentar, ID Pengguna, Nama Pengguna, Teks Komentar, Waktu Posting, Jumlah Suka, apakah itu balasan, dll.).
-    *   Anda dapat membuka file CSV ini menggunakan program spreadsheet seperti Microsoft Excel, Google Sheets, LibreOffice Calc, atau editor teks.
+6.  **Penyimpanan Hasil dalam Format CSV:**
+    *   File berformat `.csv` secara otomatis terunduh oleh browser. Nama file umumnya mencakup ID video dan jumlah data (contoh: `TTCommentExporter-7479507366552030469-205-comments-replies.csv`).
+    *   File CSV ini berisi data komentar yang berhasil di-scrape (termasuk ID Komentar, ID Pengguna, Nama Pengguna, Teks Komentar, Waktu Posting, dll.). File ini dapat dibuka dan dianalisis lebih lanjut menggunakan aplikasi spreadsheet (seperti Microsoft Excel, Google Sheets, dll.).
 
 ---
 
-Selesai! Anda telah berhasil melakukan scraping komentar dari video TikTok yang ditemukan melalui pencarian `#chatgpt` menggunakan ekstensi TTCommentExporter dan menyimpannya sebagai file CSV.
+Proses scraping komentar dari video TikTok yang ditemukan via `#chatgpt` menggunakan ekstensi TTCommentExporter telah selesai, dan data berhasil disimpan sebagai file CSV.
