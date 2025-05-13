@@ -1,8 +1,8 @@
 # Dokumentasi Proses Scraping Komentar TikTok Menggunakan Ekstensi Chrome "TTCommentExporter"
 
-Catatan ini mendokumentasikan langkah-langkah yang dilakukan untuk scraping (pengambilan data) komentar dari video TikTok menggunakan ekstensi Google Chrome "TTCommentExporter - Export TikTok Comments". Video target dalam proses ini ditemukan menggunakan kata kunci `#chatgpt`.
+Catatan ini mendokumentasikan langkah-langkah yang dilakukan untuk scraping (pengambilan data) komentar dari video TikTok menggunakan ekstensi Google Chrome "TTCommentExporter - Export TikTok Comments". Video target dalam proses ini ditemukan menggunakan kata kunci "chatgpt".
 
-**Tujuan Proses:** Mendapatkan daftar komentar (dan balasan, sesuai pilihan) dari video TikTok spesifik yang relevan dengan `#chatgpt` dan menyimpannya dalam format file CSV.
+**Tujuan Proses:** Mendapatkan daftar komentar (dan balasan, sesuai pilihan) dari video TikTok spesifik yang relevan dengan "chatgpt" dan menyimpannya dalam format file CSV.
 
 **Alat yang Digunakan:**
 *   Browser Google Chrome.
@@ -17,8 +17,8 @@ Catatan ini mendokumentasikan langkah-langkah yang dilakukan untuk scraping (pen
     *   Instalasi diselesaikan dengan memilih opsi "Tambahkan ke Chrome" dan mengonfirmasi penambahan ekstensi.
 
 2.  **Pencarian Video Target dan Aktivasi Ekstensi:**
-    *   **Pencarian Video:** Fitur pencarian TikTok digunakan untuk mencari video yang relevan dengan kata kunci `#chatgpt`.
-    *   **Pembukaan Video:** Video spesifik yang diinginkan dari hasil pencarian `#chatgpt` dibuka pada tab baru di Google Chrome. Halaman dimuat hingga bagian komentar terlihat.
+    *   **Pencarian Video:** Fitur pencarian TikTok digunakan untuk mencari video yang relevan dengan kata kunci "chatgpt".
+    *   **Pembukaan Video:** Video spesifik yang diinginkan dari hasil pencarian "chatgpt" dibuka pada tab baru di Google Chrome. Halaman dimuat hingga bagian komentar terlihat.
     *   **Aktivasi Ekstensi:** Ikon Ekstensi (puzzle) di toolbar Chrome diklik, lalu "TTCommentExporter - Export TikTok Comments" dipilih dari daftar untuk diaktifkan pada halaman video tersebut.
 
 3.  **Konfigurasi dan Memulai Ekspor:**
@@ -41,4 +41,4 @@ Catatan ini mendokumentasikan langkah-langkah yang dilakukan untuk scraping (pen
 
 ---
 
-Proses scraping komentar dari video TikTok yang ditemukan via `#chatgpt` menggunakan ekstensi TTCommentExporter telah selesai, dan data berhasil disimpan sebagai file CSV.
+Proses scraping komentar dari video TikTok yang ditemukan via "chatgpt" menggunakan ekstensi TTCommentExporter telah selesai, dan data berhasil disimpan sebagai file CSV.
