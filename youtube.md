@@ -1,8 +1,8 @@
 # Dokumentasi Proses Scraping Komentar YouTube Menggunakan YouTube Data API v3
 
-Catatan ini mendokumentasikan langkah-langkah yang dilakukan untuk scraping (pengambilan data) komentar dari video YouTube. Proses ini menggunakan YouTube Data API v3 melalui Google Cloud Platform dan dieksekusi menggunakan Google Colaboratory. Video target dalam proses ini ditemukan melalui pencarian dengan kata kunci `#chatgpt`.
+Catatan ini mendokumentasikan langkah-langkah yang dilakukan untuk scraping (pengambilan data) komentar dari video YouTube. Proses ini menggunakan YouTube Data API v3 melalui Google Cloud Platform dan dieksekusi menggunakan Google Colaboratory. Video target dalam proses ini dipilih berdasarkan **judulnya yang mengandung kata "chatgpt"**.
 
-**Tujuan Proses:** Mendapatkan daftar komentar dari video YouTube spesifik yang relevan dengan `#chatgpt` dan menyimpannya dalam format file CSV.
+**Tujuan Proses:** Mendapatkan daftar komentar dari video YouTube spesifik yang membahas topik "chatgpt" (berdasarkan judul video) dan menyimpannya dalam format file CSV.
 
 **Alat/Kondisi yang Digunakan:**
 *   Akun Google.
@@ -57,11 +57,12 @@ Catatan ini mendokumentasikan langkah-langkah yang dilakukan untuk scraping (pen
     *   Notebook baru dibuat melalui **"File" > "New notebook"**.
 
 9.  **Identifikasi dan Penyalinan ID Video YouTube Target:**
-    *   Pencarian dilakukan di YouTube menggunakan kata kunci `#chatgpt` untuk menemukan video yang relevan.
-    *   Halaman spesifik dari video target yang ditemukan dibuka di browser.
+    *   Pencarian dilakukan di YouTube untuk **video yang judulnya mengandung kata "chatgpt"**.
+    *   Dari hasil pencarian, satu atau beberapa video spesifik dipilih sebagai target untuk scraping komentar.
+    *   Halaman video target yang dipilih dibuka di browser.
     *   URL video pada address bar diperiksa (formatnya seperti `https://www.youtube.com/watch?v=VIDEO_ID` atau `https://www.youtube.com/watch?v=VIDEO_ID&ab_channel=ChannelName`).
     *   Bagian **`VIDEO_ID`** (string unik setelah `v=` dan sebelum `&` jika ada) dari URL disalin.
-    *   **Contoh:** Untuk URL `https://www.youtube.com/watch?v=z-U1r4k5r2s&ab_channel=LexClips`, `VIDEO_ID` adalah `z-U1r4k5r2s`.
+    *   **Contoh:** Jika video berjudul "Review Lengkap ChatGPT" memiliki URL `https://www.youtube.com/watch?v=z-U1r4k5r2s&ab_channel=LexClips`, maka `VIDEO_ID` adalah `z-U1r4k5r2s`. *Proses ini diulangi untuk setiap video target yang berbeda.*
 
 10. **Input Kode Python ke Colab:**
     *   Kembali ke notebook Google Colab yang telah disiapkan.
@@ -78,6 +79,7 @@ Catatan ini mendokumentasikan langkah-langkah yang dilakukan untuk scraping (pen
     API_KEY = "MASUKKAN_API_KEY_DISINI"
 
     # !!! Placeholder untuk Video ID target yang didapatkan dari YouTube !!!
+    # ID ini diganti untuk setiap video yang akan di-scrape
     videoId = "MASUKKAN_VIDEO_ID_DISINI"
 
     # Jumlah maksimal komentar yang diambil per request (maks 100)
@@ -116,7 +118,7 @@ Catatan ini mendokumentasikan langkah-langkah yang dilakukan untuk scraping (pen
                     # comment['textOriginal'] # Opsi: Teks asli
                 ])
         else:
-            print("Tidak ada komentar ditemukan atau terjadi kesalahan.")
+            print(f"Tidak ada komentar ditemukan atau terjadi kesalahan untuk video ID: {videoId}")
 
         # 7. Create a Pandas DataFrame
         df = pd.DataFrame(comments, columns=[
@@ -130,15 +132,19 @@ Catatan ini mendokumentasikan langkah-langkah yang dilakukan untuk scraping (pen
         # 9. Display confirmation and data preview
         print(f"Data berhasil disimpan sebagai: {output_filename}")
         print("Lokasi penyimpanan: Direktori utama sesi Colab (lihat panel Files di kiri).")
-        print("\nPreview Data:")
-        print(df.head())
+        if not df.empty:
+          print("\nPreview Data:")
+          print(df.head())
+        else:
+          print("DataFrame kosong karena tidak ada komentar yang diekstrak.")
+
 
     except googleapiclient.errors.HttpError as e:
-        print(f"Terjadi kesalahan saat memanggil API: {e}")
+        print(f"Terjadi kesalahan saat memanggil API untuk video ID {videoId}: {e}")
         print("Pastikan API Key benar, API YouTube Data v3 aktif,")
         print("dan Video ID valid serta memiliki komentar yang publik.")
     except Exception as e:
-        print(f"Terjadi kesalahan lain: {e}")
+        print(f"Terjadi kesalahan lain untuk video ID {videoId}: {e}")
 
     ```
 
@@ -146,7 +152,7 @@ Catatan ini mendokumentasikan langkah-langkah yang dilakukan untuk scraping (pen
     *   Dalam kode yang ditempelkan, baris `API_KEY = "MASUKKAN_API_KEY_DISINI"` ditemukan.
     *   Placeholder `"MASUKKAN_API_KEY_DISINI"` diganti dengan **API Key** aktual yang disalin dari Google Cloud Console (Tahap 7), tetap dalam tanda kutip (`"`).
     *   Baris `videoId = "MASUKKAN_VIDEO_ID_DISINI"` ditemukan.
-    *   Placeholder `"MASUKKAN_VIDEO_ID_DISINI"` diganti dengan **Video ID** aktual yang disalin dari YouTube (Tahap 9), tetap dalam tanda kutip (`"`).
+    *   Placeholder `"MASUKKAN_VIDEO_ID_DISINI"` diganti dengan **Video ID** aktual dari salah satu video target yang dipilih (Tahap 9), tetap dalam tanda kutip (`"`).
 
 12. **Penentuan Jumlah Komentar (Opsional):**
     *   Nilai variabel `maxResults` dapat disesuaikan untuk mengatur jumlah maksimum komentar yang diambil per permintaan (maksimum 100). Kode ini disetel ke 100.
@@ -159,10 +165,11 @@ Catatan ini mendokumentasikan langkah-langkah yang dilakukan untuk scraping (pen
     *   File CSV baru dengan nama seperti `scraped_youtube_comments_VIDEO_ID.csv` akan terlihat.
     *   Ikon **tiga titik vertikal** (⋮) di sebelah nama file tersebut diklik.
     *   **"Download"** dipilih untuk menyimpan file CSV ke penyimpanan lokal.
+    *   *(Langkah 11-13 diulangi jika ada beberapa video target yang berbeda, dengan mengganti nilai `videoId` pada kode setiap kali sebelum menjalankan sel).*
 
 14. **Penyimpanan Hasil dalam File CSV:**
     *   File CSV yang terunduh berisi data komentar yang berhasil di-scrape dari video YouTube yang ditargetkan, termasuk detail seperti penulis, waktu publikasi, jumlah suka, dan teks komentar. File ini siap dibuka dan dianalisis menggunakan perangkat lunak spreadsheet.
 
 ---
 
-Proses scraping komentar dari video YouTube yang ditemukan via `#chatgpt` menggunakan YouTube Data API v3 telah selesai, dan data berhasil disimpan sebagai file CSV.
+Proses scraping komentar dari video YouTube yang **judulnya mengandung kata "chatgpt"** menggunakan YouTube Data API v3 telah selesai, dan data berhasil disimpan sebagai file CSV.
