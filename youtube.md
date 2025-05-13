@@ -1,99 +1,88 @@
-# Panduan Scraping Komentar YouTube Menggunakan YouTube Data API v3
+# Dokumentasi Proses Scraping Komentar YouTube Menggunakan YouTube Data API v3
 
-Dokumentasi ini menjelaskan langkah-langkah untuk melakukan scraping (pengambilan data) komentar dari video YouTube menggunakan YouTube Data API v3 melalui Google Cloud Platform dan Google Colaboratory.
+Catatan ini mendokumentasikan langkah-langkah yang dilakukan untuk scraping (pengambilan data) komentar dari video YouTube. Proses ini menggunakan YouTube Data API v3 melalui Google Cloud Platform dan dieksekusi menggunakan Google Colaboratory. Video target dalam proses ini ditemukan melalui pencarian dengan kata kunci `#chatgpt`.
 
-**Tujuan:** Mendapatkan daftar komentar dari video YouTube tertentu dan menyimpannya dalam format file CSV.
+**Tujuan Proses:** Mendapatkan daftar komentar dari video YouTube spesifik yang relevan dengan `#chatgpt` dan menyimpannya dalam format file CSV.
 
-**Prasyarat:**
+**Alat/Kondisi yang Digunakan:**
+*   Akun Google.
+*   Akses internet.
+*   Google Cloud Platform (untuk API Key).
+*   Google Colaboratory (untuk eksekusi kode Python).
 
-- Akun Google.
-- Akses internet.
-
-## Langkah-langkah Rinci:
+## Tahapan Proses yang Dilakukan:
 
 ### Bagian 1: Pengaturan Google Cloud Platform
 
-1.  **Buka Google Cloud Console:**
+1.  **Akses Google Cloud Console:**
+    *   Halaman [Google Cloud Console](https://console.cloud.google.com/) dikunjungi.
+    *   Login dilakukan menggunakan Akun Google yang relevan jika diminta.
 
-    - Kunjungi halaman [Google Cloud Console](https://console.cloud.google.com/).
-    - Login menggunakan Akun Google Anda jika diminta.
-
-2.  **Pilih atau Buat Proyek Baru:**
-
-    - Di bagian atas halaman, klik dropdown **"Select a project"** (Pilih Proyek).
-    - Sebuah dialog akan muncul.
-      - **Jika Anda belum memiliki proyek:** Klik tombol **"+ NEW PROJECT"** (Proyek Baru).
-        - Masukkan nama proyek yang diinginkan (misalnya, "YouTube Scraper Project").
-        - Pilih Organization (jika ada/diperlukan) atau biarkan "No organization".
-        - Klik **"CREATE"**.
-      - **Jika Anda sudah memiliki proyek:** Pilih proyek yang ingin Anda gunakan dari daftar yang tersedia.
+2.  **Pemilihan atau Pembuatan Proyek Baru:**
+    *   Dropdown **"Select a project"** di bagian atas halaman diklik.
+    *   Sebuah dialog muncul.
+        *   **Jika belum ada proyek:** Tombol **"+ NEW PROJECT"** diklik. Nama proyek yang sesuai dimasukkan (misalnya, "YouTube Scraper Project"). Organisasi dipilih (jika relevan) atau dibiarkan "No organization". Tombol **"CREATE"** diklik.
+        *   **Jika sudah ada proyek:** Proyek yang akan digunakan dipilih dari daftar yang tersedia.
 
 3.  **Akses Menu Library API:**
+    *   Setelah proyek terpilih atau terbuat, ikon **Navigation Menu** (tiga garis horizontal) di pojok kiri atas diklik.
+    *   Kursor diarahkan ke menu **"APIs & Services"**.
+    *   **"Library"** diklik dari submenu yang muncul.
 
-    - Setelah proyek dipilih atau dibuat, klik ikon **Navigation Menu** (ikon tiga garis horizontal atau "hamburger menu") di pojok kiri atas.
-    - Arahkan kursor mouse ke menu **"APIs & Services"**.
-    - Dari submenu yang muncul, klik **"Library"**.
+4.  **Pencarian YouTube Data API v3:**
+    *   Halaman API Library terbuka.
+    *   Pada kolom pencarian (`Search for APIs & Services`), `YouTube Data API v3` diketik.
+    *   Tombol **Enter** ditekan atau hasil pencarian yang relevan diklik.
 
-4.  **Cari YouTube Data API v3:**
+5.  **Aktivasi YouTube Data API v3:**
+    *   Hasil pencarian **"YouTube Data API v3"** diklik.
+    *   Pada halaman detail API, tombol **"ENABLE"** diklik. Proses aktivasi ditunggu beberapa saat hingga selesai.
 
-    - Anda akan diarahkan ke halaman API Library.
-    - Pada kolom pencarian di bagian atas (`Search for APIs & Services`), ketik `YouTube Data API v3`.
-    - Tekan **Enter** atau klik hasil pencarian yang relevan.
+6.  **Pembuatan Kunci API (API Key):**
+    *   Setelah API diaktifkan, halaman detail API tersebut terbuka.
+    *   Di menu sebelah kiri, **"Credentials"** diklik.
+    *   Di bagian atas halaman Credentials, tombol **"+ CREATE CREDENTIALS"** diklik.
+    *   **"API key"** dipilih dari dropdown yang muncul.
 
-5.  **Aktifkan YouTube Data API v3:**
-
-    - Klik pada hasil pencarian **"YouTube Data API v3"**.
-    - Pada halaman detail API, klik tombol **"ENABLE"**. Tunggu beberapa saat hingga proses aktivasi selesai.
-
-6.  **Buat Kunci API (API Key):**
-
-    - Setelah API diaktifkan, Anda akan diarahkan ke halaman detail API tersebut.
-    - Di menu sebelah kiri, klik **"Credentials"** (Kredensial).
-    - Di bagian atas halaman Credentials, klik tombol **"+ CREATE CREDENTIALS"**.
-    - Dari dropdown yang muncul, pilih **"API key"**.
-
-7.  **Salin Kunci API (API Key):**
-    - Sebuah pop-up akan muncul menampilkan API Key yang baru saja dibuat.
-    - Klik ikon **"Copy"** (Salin) di sebelah kanan API Key untuk menyalinnya ke clipboard.
-    - **Penting:** Simpan API Key ini di tempat yang aman dan jangan bagikan secara publik. Anda akan menggunakannya nanti dalam kode Python.
-    - Anda bisa mengklik **"Close"**. (Disarankan untuk membatasi kunci API nanti untuk keamanan tambahan, tetapi untuk tutorial ini kita akan melewatinya).
+7.  **Penyalinan Kunci API (API Key):**
+    *   Sebuah pop-up muncul menampilkan API Key yang baru dibuat.
+    *   Ikon **"Copy"** di sebelah kanan API Key diklik untuk menyalinnya ke clipboard.
+    *   **Catatan:** API Key ini disimpan di tempat yang aman dan tidak dibagikan secara publik karena akan digunakan dalam kode Python.
+    *   Tombol **"Close"** diklik. (Pembatasan kunci API dapat dilakukan nanti untuk keamanan tambahan).
 
 ### Bagian 2: Pengambilan Komentar dengan Google Colaboratory
 
-8.  **Buka Google Colab dan Siapkan Notebook:**
+8.  **Persiapan Google Colab Notebook:**
+    *   [Google Colaboratory](https://colab.research.google.com/) dikunjungi.
+    *   Notebook baru dibuat melalui **"File" > "New notebook"**.
 
-    - Kunjungi [Google Colaboratory](https://colab.research.google.com/).
-    - Buat notebook baru dengan mengklik **"File" > "New notebook"**.
+9.  **Identifikasi dan Penyalinan ID Video YouTube Target:**
+    *   Pencarian dilakukan di YouTube menggunakan kata kunci `#chatgpt` untuk menemukan video yang relevan.
+    *   Halaman spesifik dari video target yang ditemukan dibuka di browser.
+    *   URL video pada address bar diperiksa (formatnya seperti `https://www.youtube.com/watch?v=VIDEO_ID` atau `https://www.youtube.com/watch?v=VIDEO_ID&ab_channel=ChannelName`).
+    *   Bagian **`VIDEO_ID`** (string unik setelah `v=` dan sebelum `&` jika ada) dari URL disalin.
+    *   **Contoh:** Untuk URL `https://www.youtube.com/watch?v=z-U1r4k5r2s&ab_channel=LexClips`, `VIDEO_ID` adalah `z-U1r4k5r2s`.
 
-9.  **Salin ID Video YouTube Target:**
-
-    - Buka YouTube di browser Anda dan cari video yang komentarnya ingin Anda scrape.
-    - Buka halaman video tersebut.
-    - Lihat URL video di address bar browser Anda. URL akan terlihat seperti ini: `https://www.youtube.com/watch?v=VIDEO_ID` atau `https://www.youtube.com/watch?v=VIDEO_ID&ab_channel=ChannelName`.
-    - Salin bagian **`VIDEO_ID`** dari URL tersebut. `VIDEO_ID` adalah string unik setelah `v=` dan sebelum karakter `&` (jika ada).
-    - **Contoh:** Jika URL adalah `https://www.youtube.com/watch?v=z-U1r4k5r2s&ab_channel=LexClips`, maka `VIDEO_ID` adalah `z-U1r4k5r2s`.
-
-10. **Masukkan Kode Python ke Colab:**
-
-    - Kembali ke notebook Google Colab Anda.
-    - Salin kode Python berikut dan tempelkan ke dalam sel kode pertama di notebook:
+10. **Input Kode Python ke Colab:**
+    *   Kembali ke notebook Google Colab yang telah disiapkan.
+    *   Kode Python berikut disalin dan ditempelkan ke dalam sel kode pertama:
 
     ```python
     # 1. Import libraries
     import googleapiclient.discovery
     import pandas as pd
-    import os # Tambahkan ini jika ingin menyimpan ke Google Drive
+    import os # Opsional: jika ingin menyimpan ke Google Drive
 
     # 2. Set up API Key, Video ID, and Max Results
-    # !!! GANTI DENGAN API KEY ANDA YANG SEBENARNYA !!!
-    API_KEY = "MASUKKAN_API_KEY_ANDA_DISINI"
+    # !!! Placeholder untuk API Key yang didapatkan dari GCP !!!
+    API_KEY = "MASUKKAN_API_KEY_DISINI"
 
-    # !!! GANTI DENGAN VIDEO ID TARGET ANDA !!!
-    videoId = "MASUKKAN_VIDEO_ID_ANDA_DISINI"
+    # !!! Placeholder untuk Video ID target yang didapatkan dari YouTube !!!
+    videoId = "MASUKKAN_VIDEO_ID_DISINI"
 
-    # Tentukan jumlah maksimal komentar yang ingin diambil (maksimum per request adalah 100)
-    # Jika ingin lebih, perlu implementasi pagination (tidak dicakup di kode dasar ini)
-    maxResults = 100 # Anda bisa ubah angka ini (misal: 40, 50, 100)
+    # Jumlah maksimal komentar yang diambil per request (maks 100)
+    # Untuk >100 komentar, perlu implementasi pagination
+    maxResults = 100 # Angka ini bisa diubah (misal: 40, 50, 100)
 
     # 3. Build the YouTube API service object
     api_service_name = "youtube"
@@ -104,10 +93,10 @@ Dokumentasi ini menjelaskan langkah-langkah untuk melakukan scraping (pengambila
 
         # 4. Request comments from the specified video
         request = youtube.commentThreads().list(
-            part="snippet", # Ambil bagian snippet yang berisi info komentar
+            part="snippet", # Mengambil bagian snippet
             videoId=videoId,
             maxResults=maxResults,
-            order="relevance" # Urutkan berdasarkan relevansi (atau 'time' untuk terbaru)
+            order="relevance" # Urutan komentar ('relevance' atau 'time')
         )
 
         # 5. Execute the request
@@ -123,8 +112,8 @@ Dokumentasi ini menjelaskan langkah-langkah untuk melakukan scraping (pengambila
                     comment['publishedAt'],
                     comment['updatedAt'],
                     comment['likeCount'],
-                    comment['textDisplay'] # Mengambil teks dengan format HTML dasar
-                    # comment['textOriginal'] # Opsi: Mengambil teks asli tanpa format
+                    comment['textDisplay'] # Teks dengan format HTML dasar
+                    # comment['textOriginal'] # Opsi: Teks asli
                 ])
         else:
             print("Tidak ada komentar ditemukan atau terjadi kesalahan.")
@@ -136,49 +125,44 @@ Dokumentasi ini menjelaskan langkah-langkah untuk melakukan scraping (pengambila
 
         # 8. Define filename and save to CSV
         output_filename = f'scraped_youtube_comments_{videoId}.csv'
-        df.to_csv(output_filename, index=False, encoding='utf-8-sig') # utf-8-sig untuk kompatibilitas Excel
+        df.to_csv(output_filename, index=False, encoding='utf-8-sig') # encoding utf-8-sig
 
-        # 9. Display the first few rows of the DataFrame and confirm save location
+        # 9. Display confirmation and data preview
         print(f"Data berhasil disimpan sebagai: {output_filename}")
-        print("Lokasi penyimpanan: Di direktori utama sesi Colab Anda (lihat panel Files di kiri).")
+        print("Lokasi penyimpanan: Direktori utama sesi Colab (lihat panel Files di kiri).")
         print("\nPreview Data:")
         print(df.head())
 
     except googleapiclient.errors.HttpError as e:
         print(f"Terjadi kesalahan saat memanggil API: {e}")
-        print("Pastikan API Key Anda benar, API YouTube Data v3 sudah diaktifkan,")
-        print("dan Video ID valid serta memiliki komentar yang diizinkan untuk dilihat.")
+        print("Pastikan API Key benar, API YouTube Data v3 aktif,")
+        print("dan Video ID valid serta memiliki komentar yang publik.")
     except Exception as e:
         print(f"Terjadi kesalahan lain: {e}")
 
     ```
 
-11. **Masukkan API Key dan Video ID:**
+11. **Pengisian API Key dan Video ID pada Kode:**
+    *   Dalam kode yang ditempelkan, baris `API_KEY = "MASUKKAN_API_KEY_DISINI"` ditemukan.
+    *   Placeholder `"MASUKKAN_API_KEY_DISINI"` diganti dengan **API Key** aktual yang disalin dari Google Cloud Console (Tahap 7), tetap dalam tanda kutip (`"`).
+    *   Baris `videoId = "MASUKKAN_VIDEO_ID_DISINI"` ditemukan.
+    *   Placeholder `"MASUKKAN_VIDEO_ID_DISINI"` diganti dengan **Video ID** aktual yang disalin dari YouTube (Tahap 9), tetap dalam tanda kutip (`"`).
 
-    - Dalam kode yang baru saja Anda tempel, cari baris:
-      `API_KEY = "MASUKKAN_API_KEY_ANDA_DISINI"`
-    - Ganti `"MASUKKAN_API_KEY_ANDA_DISINI"` dengan **API Key** yang Anda salin dari Google Cloud Console (Step 7). Pastikan API Key tetap berada di dalam tanda kutip (`"`).
-    - Cari baris:
-      `videoId = "MASUKKAN_VIDEO_ID_ANDA_DISINI"`
-    - Ganti `"MASUKKAN_VIDEO_ID_ANDA_DISINI"` dengan **Video ID** yang Anda salin dari YouTube (Step 9). Pastikan Video ID tetap berada di dalam tanda kutip (`"`).
+12. **Penentuan Jumlah Komentar (Opsional):**
+    *   Nilai variabel `maxResults` dapat disesuaikan untuk mengatur jumlah maksimum komentar yang diambil per permintaan (maksimum 100). Kode ini disetel ke 100.
+    *   *Catatan: Pengambilan lebih dari 100 komentar memerlukan implementasi logika *pagination*.*
 
-12. **Tentukan Jumlah Komentar (Opsional):**
+13. **Eksekusi Kode dan Pengunduhan Hasil:**
+    *   Tombol **"Run"** (ikon play ►) di sebelah kiri sel kode diklik, atau `Shift + Enter` ditekan.
+    *   Proses eksekusi kode ditunggu hingga selesai. Output akan muncul di bawah sel kode, menampilkan preview data dan konfirmasi penyimpanan file.
+    *   Setelah selesai, panel **"Files"** (ikon folder) di sebelah kiri jendela Colab diperiksa.
+    *   File CSV baru dengan nama seperti `scraped_youtube_comments_VIDEO_ID.csv` akan terlihat.
+    *   Ikon **tiga titik vertikal** (⋮) di sebelah nama file tersebut diklik.
+    *   **"Download"** dipilih untuk menyimpan file CSV ke penyimpanan lokal.
 
-    - Anda dapat mengubah nilai variabel `maxResults` untuk menentukan jumlah maksimum komentar yang ingin diambil dalam satu kali permintaan (maksimum 100 per permintaan oleh API). Kode di atas disetel ke 100.
-    - *Catatan: Untuk mengambil lebih dari 100 komentar, diperlukan logika *pagination* (menggunakan `nextPageToken` dari respons API), yang tidak termasuk dalam kode dasar ini.*
-
-13. **Jalankan Kode dan Unduh Hasil:**
-
-    - Klik tombol **"Run"** (ikon play ►) di sebelah kiri sel kode, atau tekan `Shift + Enter` pada keyboard Anda.
-    - Tunggu hingga kode selesai dieksekusi. Output akan muncul di bawah sel kode, menampilkan beberapa baris pertama data dan pesan konfirmasi penyimpanan file.
-    - Setelah selesai, lihat panel **"Files"** (ikon folder) di sebelah kiri jendela Colab.
-    - Anda akan melihat file CSV baru dengan nama seperti `scraped_youtube_comments_VIDEO_ID.csv` (misalnya, `scraped_youtube_comments_z-U1r4k5r2s.csv`).
-    - Klik ikon **tiga titik vertikal** (⋮) di sebelah nama file tersebut.
-    - Pilih **"Download"** untuk menyimpan file CSV ke komputer Anda.
-
-14. **Hasil Tersimpan dalam File CSV:**
-    - File CSV yang Anda unduh berisi komentar-komentar yang berhasil di-scrape dari video YouTube yang ditentukan, beserta informasi tambahan seperti penulis, waktu publikasi, jumlah suka, dll. Anda bisa membukanya menggunakan program seperti Microsoft Excel, Google Sheets, atau editor teks.
+14. **Penyimpanan Hasil dalam File CSV:**
+    *   File CSV yang terunduh berisi data komentar yang berhasil di-scrape dari video YouTube yang ditargetkan, termasuk detail seperti penulis, waktu publikasi, jumlah suka, dan teks komentar. File ini siap dibuka dan dianalisis menggunakan perangkat lunak spreadsheet.
 
 ---
 
-Selesai! Anda telah berhasil melakukan scraping komentar YouTube menggunakan API dan menyimpannya sebagai file CSV.
+Proses scraping komentar dari video YouTube yang ditemukan via `#chatgpt` menggunakan YouTube Data API v3 telah selesai, dan data berhasil disimpan sebagai file CSV.
