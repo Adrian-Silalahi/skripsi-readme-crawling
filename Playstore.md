@@ -1,6 +1,6 @@
 # Dokumentasi Proses Scraping Ulasan Aplikasi dari Google Play Store
 
-Catatan ini mendokumentasikan langkah-langkah dan kode yang digunakan untuk melakukan scraping (pengambilan data) ulasan aplikasi dari Google Play Store. Proses ini memanfaatkan library Python `google-play-scraper` untuk mengambil data ulasan dan `pandas` untuk mengolah serta menyimpannya ke dalam format CSV. Selain itu, terdapat setup untuk penyimpanan data ke MongoDB, meskipun pada kode akhir, data hanya disimpan ke CSV.
+Catatan ini mendokumentasikan langkah-langkah dan kode yang digunakan untuk melakukan scraping (pengambilan data) ulasan aplikasi dari Google Play Store. Proses ini memanfaatkan library Python `google-play-scraper` untuk mengambil data ulasan dan `pandas` untuk mengolah serta menyimpannya ke dalam format CSV.
 
 **Tujuan Proses:** Mendapatkan sejumlah besar ulasan (dalam kasus ini, 15.000 ulasan terbaru) dari aplikasi spesifik di Google Play Store (dalam contoh ini, aplikasi dengan ID `com.openai.chatgpt`) dan menyimpannya dalam format file CSV untuk analisis lebih lanjut.
 
@@ -10,55 +10,35 @@ Catatan ini mendokumentasikan langkah-langkah dan kode yang digunakan untuk mela
 *   Library Python:
     *   `google-play-scraper`
     *   `pandas`
-    *   `pymongo` (meskipun tidak digunakan untuk output akhir di kode yang diberikan, setupnya ada)
-    *   `pprint`
-    *   `datetime`
-    *   `tzlocal`
-    *   `random`
-    *   `time`
+    *   `pprint` (diimpor, namun tidak secara eksplisit digunakan dalam potongan kode akhir ini)
+    *   `datetime` (diimpor, namun tidak secara eksplisit digunakan dalam potongan kode akhir ini)
+    *   `tzlocal` (diimpor, namun tidak secara eksplisit digunakan dalam potongan kode akhir ini)
+    *   `random` (diimpor, namun tidak secara eksplisit digunakan dalam potongan kode akhir ini)
+    *   `time` (diimpor, namun tidak secara eksplisit digunakan dalam potongan kode akhir ini)
 
 ## Tahapan Proses yang Dilakukan:
 
 1.  **Instalasi Library yang Dibutuhkan:**
-    *   Library `google-play-scraper` dan `pymongo` diinstal menggunakan pip. Perintah yang dijalankan adalah:
+    *   Library `google-play-scraper` diinstal menggunakan pip. Perintah yang dijalankan adalah:
         ```bash
         !pip install -q google-play-scraper
-        !pip install pymongo
         ```
     *   Tanda seru (`!`) mengindikasikan bahwa perintah ini dijalankan dari dalam lingkungan seperti Jupyter Notebook atau Google Colab. Jika dijalankan dari terminal standar, tanda seru dihilangkan.
 
 2.  **Impor Library ke dalam Script Python:**
-    *   Semua library yang diperlukan untuk proses scraping, pengolahan data, dan koneksi ke database (opsional) diimpor:
+    *   Library yang diperlukan untuk proses scraping dan pengolahan data diimpor:
         ```python
         import pandas as pd
         from google_play_scraper import app, Sort, reviews
         from pprint import pprint
-        import pymongo
-        from pymongo import MongoClient
         import datetime as dt
         from tzlocal import get_localzone
         import random
         import time
         ```
+    *   *Catatan: Beberapa library yang diimpor (seperti `pprint`, `datetime`, `tzlocal`, `random`, `time`) tidak secara langsung digunakan dalam potongan kode akhir untuk proses scraping dan penyimpanan ke CSV ini, namun mungkin telah disiapkan untuk fungsionalitas tambahan atau logging yang tidak disertakan dalam contoh ini.*
 
-3.  **Setup Koneksi ke MongoDB (Opsional, tidak digunakan untuk output akhir):**
-    *   Meskipun data akhir disimpan ke CSV, kode menyertakan setup untuk koneksi ke database MongoDB lokal:
-        ```python
-        # Set up Mongo client
-        client = MongoClient(host='localhost', port=27017)
-
-        # Database for project
-        app_proj_db = client['app_proj_db']
-
-        # Set up new collection within project db for app info
-        info_collection = app_proj_db['info_collection']
-
-        # Set up new collection within project db for app reviews
-        review_collection = app_proj_db['review_collection']
-        ```
-    *   Bagian ini dapat diabaikan jika target penyimpanan hanya file CSV.
-
-4.  **Proses Scraping Ulasan Aplikasi:**
+3.  **Proses Scraping Ulasan Aplikasi:**
     *   Fungsi `reviews` dari library `google-play-scraper` digunakan untuk mengambil ulasan dari aplikasi target.
     *   Parameter yang dikonfigurasi untuk pengambilan ulasan adalah:
         *   `app_id`: `'com.openai.chatgpt'` (ID aplikasi yang dapat ditemukan pada URL aplikasi di Google Play Store).
@@ -77,13 +57,13 @@ Catatan ini mendokumentasikan langkah-langkah dan kode yang digunakan untuk mela
         ```
     *   Variabel `rvws` akan berisi daftar ulasan, dan `token` digunakan untuk pagination jika diperlukan pengambilan data lebih lanjut (tidak dieksplorasi lebih lanjut dalam kode ini).
 
-5.  **Konversi Data Ulasan ke DataFrame Pandas:**
+4.  **Konversi Data Ulasan ke DataFrame Pandas:**
     *   Daftar ulasan yang telah di-scrape (`rvws`) dikonversi menjadi DataFrame Pandas untuk kemudahan manipulasi dan penyimpanan.
         ```python
         rvws_df = pd.DataFrame(rvws)
         ```
 
-6.  **Penyimpanan DataFrame ke File CSV:**
+5.  **Penyimpanan DataFrame ke File CSV:**
     *   DataFrame yang berisi ulasan aplikasi disimpan ke dalam file CSV dengan nama `reviews_us_15000.csv`.
     *   `index=None` digunakan agar indeks DataFrame tidak ditulis ke file CSV.
     *   `header=True` digunakan untuk menyertakan nama kolom sebagai baris header di file CSV.
