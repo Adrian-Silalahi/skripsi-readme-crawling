@@ -34,7 +34,7 @@ Catatan ini mendokumentasikan tahapan dan kode yang dieksekusi dalam lingkungan 
         *   `lang`: `'en'` (mengindikasikan preferensi untuk ulasan dalam Bahasa Inggris).
         *   `country`: `'us'` (menentukan region Play Store yang diakses adalah Amerika Serikat. *Catatan: Kombinasi bahasa 'id' dan negara 'us' mungkin menghasilkan ulasan dalam bahasa Indonesia jika tersedia dari pengguna di region tersebut, atau dapat default ke bahasa lain jika ulasan Bahasa Indonesia tidak dominan/tersedia di region 'us' untuk aplikasi ini.*).
         *   `sort`: `Sort.NEWEST` (menginstruksikan untuk mengambil ulasan yang paling baru).
-        *   `count`: `500` (menetapkan jumlah maksimum ulasan yang akan diambil).
+        *   `count`: `15000` (menetapkan jumlah maksimum ulasan yang akan diambil).
         ```python
         rvws, token = reviews(
             'com.openai.chatgpt',
@@ -63,4 +63,4 @@ Catatan ini mendokumentasikan tahapan dan kode yang dieksekusi dalam lingkungan 
 
 ---
 
-Proses scraping 500 ulasan terbaru untuk aplikasi `com.openai.chatgpt` dari Google Play Store (region 'us', preferensi bahasa 'id') telah selesai dilaksanakan di Google Colaboratory. Hasilnya telah disimpan dalam file `reviews.csv`.
+Proses scraping 15000 ulasan terbaru untuk aplikasi `com.openai.chatgpt` dari Google Play Store (region 'us', preferensi bahasa 'id') telah selesai dilaksanakan di Google Colaboratory. Hasilnya telah disimpan dalam file `reviews.csv`.
