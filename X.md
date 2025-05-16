@@ -65,7 +65,7 @@ Catatan ini mendokumentasikan langkah-langkah yang dilakukan untuk proses scrapi
     # Crawl Data
     filename = 'chatGPT.csv'
     search_keyword = 'chatgpt since:2023-01-01 until:2024-12-31 lang:en'
-    limit = 4000
+    limit = 12000
     ```
 
 4.  **Eksekusi TweetHarvest:**
@@ -89,7 +89,7 @@ Catatan ini mendokumentasikan langkah-langkah yang dilakukan untuk proses scrapi
     *   Contoh output konfirmasi:
         ```
         Your tweets saved to: /content/tweets-data/chatGPT.csv
-        Total tweets saved: 385
+        Total tweets saved: 12.000
         ```
     *   File CSV ini kemudian dapat diunduh dari panel "Files" di Google Colab untuk analisis lebih lanjut.
 
