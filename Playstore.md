@@ -2,7 +2,7 @@
 
 Catatan ini mendokumentasikan tahapan dan kode yang dieksekusi dalam lingkungan Google Colaboratory untuk melakukan scraping (pengambilan data) ulasan aplikasi dari Google Play Store. Proses ini memanfaatkan library Python `google-play-scraper` untuk mengambil data ulasan dan `pandas` untuk mengolah serta menyimpannya ke dalam format CSV.
 
-**Tujuan Proses:** Mendapatkan 15000 ulasan terbaru dari aplikasi `com.openai.chatgpt` di Google Play Store, dengan preferensi bahasa ulasan Bahasa Indonesia (lang='id') dari region 'us', dan menyimpannya dalam format file CSV.
+**Tujuan Proses:** Mendapatkan 15000 ulasan terbaru dari aplikasi `com.openai.chatgpt` di Google Play Store, dengan preferensi bahasa ulasan Bahasa Inggris (lang='en') dari region 'us', dan menyimpannya dalam format file CSV.
 
 **Lingkungan dan Alat yang Digunakan:**
 *   Google Colaboratory sebagai lingkungan eksekusi Python.
@@ -31,14 +31,14 @@ Catatan ini mendokumentasikan tahapan dan kode yang dieksekusi dalam lingkungan 
     *   Fungsi `reviews` dari library `google-play-scraper` dipanggil untuk mengambil ulasan dari aplikasi target.
     *   Parameter yang dikonfigurasi untuk panggilan fungsi ini adalah:
         *   `app_id`: `'com.openai.chatgpt'` (ID aplikasi target).
-        *   `lang`: `'id'` (mengindikasikan preferensi untuk ulasan dalam Bahasa Indonesia).
+        *   `lang`: `'en'` (mengindikasikan preferensi untuk ulasan dalam Bahasa Inggris).
         *   `country`: `'us'` (menentukan region Play Store yang diakses adalah Amerika Serikat. *Catatan: Kombinasi bahasa 'id' dan negara 'us' mungkin menghasilkan ulasan dalam bahasa Indonesia jika tersedia dari pengguna di region tersebut, atau dapat default ke bahasa lain jika ulasan Bahasa Indonesia tidak dominan/tersedia di region 'us' untuk aplikasi ini.*).
         *   `sort`: `Sort.NEWEST` (menginstruksikan untuk mengambil ulasan yang paling baru).
         *   `count`: `500` (menetapkan jumlah maksimum ulasan yang akan diambil).
         ```python
         rvws, token = reviews(
             'com.openai.chatgpt',
-            lang='id',
+            lang='en',
             country='us',
             sort=Sort.NEWEST,
             count = 15000
