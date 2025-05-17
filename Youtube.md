@@ -84,7 +84,7 @@ Catatan ini mendokumentasikan langkah-langkah yang dilakukan untuk scraping (pen
 
     # Jumlah maksimal komentar yang diambil per request (maks 100)
     # Untuk >100 komentar, perlu implementasi pagination
-    maxResults = 100 # Angka ini bisa diubah (misal: 40, 50, 100)
+    maxResults = 100 
 
     # 3. Build the YouTube API service object
     api_service_name = "youtube"
